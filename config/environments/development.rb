@@ -69,9 +69,18 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
 
   config.hosts << "3000-old-dust-29752502.in-ws1.runcode.io"
+  config.hosts << "3000-old-dust-29752502.in-ws2.runcode.io"
   logger           = ActiveSupport::Logger.new(STDOUT)
   logger.formatter = config.log_formatter
   config.logger    = ActiveSupport::TaggedLogging.new(logger)
 
-  config.action_cable.allowed_request_origins = ['https://3000-old-dust-29752502.in-ws1.runcode.io']
+  #logger.info(config.logger)
+  #logger.info("config.hosts = #{config.hosts}")
+
+  config.action_cable.allowed_request_origins = ['https://3000-old-dust-29752502.in-ws2.runcode.io']
+
+  config.action_controller.allow_forgery_protection = false
+
+  config.active_storage.service = :local
+
 end

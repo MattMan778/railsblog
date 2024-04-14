@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
-  skip_before_action :verify_authenticity_token
+  include ActiveStorage::SetCurrent
+  #skip_before_action :verify_authenticity_token
 
   before_action :set_post, only: %i[ show edit update destroy ]
 
@@ -63,14 +64,22 @@ class PostsController < ApplicationController
     end
   end
 
+  def file
+    logger.info("Inside file method")
+    file = ActiveStorage::Blob.first
+    redirect_to file.url
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @post = Post.find(params[:id])
+      @post = Post.find(params[:id]) 
     end
 
     # Only allow a list of trusted parameters through.
     def post_params
+      logger.info(params)
       params.require(:post).permit(:tile, :content)
     end
+
 end
